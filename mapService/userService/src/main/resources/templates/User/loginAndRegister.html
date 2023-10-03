@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/loginAndRegister.css}">
+</head>
+<body>
+<div class="wrap">
+    <div class="form-wrap">
+        <div class="button-wrap">
+            <div id="btn"></div>
+            <button type="button" class="togglebtn" onclick="login()">LOG IN</button>
+            <button type="button" class="togglebtn" onclick="register()">REGISTER</button>
+        </div>
+        <div id="login" class="input-group">
+            <input type="text" class="input-field email" placeholder="Email" required>
+            <input type="password" class="input-field passwd" placeholder="Enter Password" required>
+<!--            <label for="username" class="error-label">에러 메시지 출력</label>-->
+            <button type="button" id="loginBtn" class="submit">Login</button>
+        </div>
+        <div id="register" class="input-group">
+            <input type="text" class="input-field name" placeholder="User name(6~10 자리)" required>
+            <input type="email" class="input-field email" placeholder="Your Email(aaa@bbb.com)" required>
+            <input type="password" class="input-field passwd" placeholder="Enter Password(6~10 자리)" required>
+            <input type="text" class="input-field phoneNumber"
+                   placeholder="Phonenumber(11자리)" required>
+            <button type="button" id="registerBtn" class="submit">REGISTER</button>
+        </div>
+    </div>
+</div>
+<script>
+    var x = document.getElementById("login");
+    var y = document.getElementById("register");
+    var z = document.getElementById("btn");
+    function login(){
+        x.style.left = "50px";
+        y.style.left = "450px";
+        z.style.left = "0";
+    }
+    function register(){
+        x.style.left = "-400px";
+        y.style.left = "50px";
+        z.style.left = "110px";
+    }
+</script>
+<script type="text/javascript" src="/JS/LoginFetch.js"></script>
+</body>
+
+</html>
