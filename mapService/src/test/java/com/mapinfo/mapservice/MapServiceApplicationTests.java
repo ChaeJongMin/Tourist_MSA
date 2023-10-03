@@ -19,7 +19,7 @@ import java.util.Random;
 
 class MapServiceApplicationTests {
     private static final String API_URL = "http://apis.data.go.kr/6290000/tourdestbaseinfo/gettourdestbaseinfo";
-    private static final String SERVICE_KEY = "UZXY3v%2FziYQ%2BPUvFGDXkN9Idj0nYnjMj7I%2FCQKaEJUyqhpOdtCMF%2B6LTVFwdbd6Rbd%2BFHf5UVm47hRULi5%2FQZg%3D%3D";
+    private static final String SERVICE_KEY = "시크릿 키";
     @Autowired
     private TouristRepository touristRepository;
     @Test

@@ -17,6 +17,7 @@ public class MapApi {
 
     @GetMapping("/api/map")
     public ResponseEntity<?> getTouristInfo(){
+        log.info("");
         return ResponseEntity.status(HttpStatus.OK).body(mapService.getTourist());
     }
 
