@@ -1,0 +1,24 @@
+server:
+  port: 9004
+spring:
+  thymeleaf:
+    enabled : true
+    prefix: classpath:templates/
+    suffix: .html
+  application:
+    name: mapService
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/tourist
+    username: root
+    password: test1234!
+    driver-class-name: com.mysql.cj.jdbc.Driver
