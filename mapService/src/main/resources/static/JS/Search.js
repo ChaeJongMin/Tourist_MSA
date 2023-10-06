@@ -4,6 +4,7 @@ const searchParent=document.querySelector('#search');
 autocompleteResults.style.display='none';
 
 export function setSearchEvent(data){
+    const autocompleteResults = document.querySelector('#autocompleteResults');
     searchInput.addEventListener('input', function() {
         const inputValue = searchInput.value;
         const touristNmArray=data;
@@ -22,9 +23,7 @@ export function setSearchEvent(data){
 }
 
 function showList(matches) {
-    autocompleteResults.querySelectorAll('li').forEach(ele=>{
-        ele.remove();
-    });
+    removeLiEle();
 
     searchParent.style.height = 45 + 'px';
 
@@ -73,11 +72,15 @@ function removeBorderShadow(){
     autocompleteResults.style.borderTop = 'none';
 }
 function initSearch(){
-    autocompleteResults.querySelectorAll('li').forEach(ele=>{
-        ele.remove();
-    });
+    removeLiEle();
     removeBorderShadow();
     autocompleteResults.style.overflowY = 'hidden';
     searchParent.style.height = 45 + 'px';
     autocompleteResults.style.display = 'none';
+}
+export function removeLiEle(){
+    const autocompleteResults = document.querySelector('#autocompleteResults');
+    autocompleteResults.querySelectorAll('li').forEach(ele=>{
+        ele.remove();
+    });
 }

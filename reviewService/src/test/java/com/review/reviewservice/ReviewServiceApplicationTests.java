@@ -1,6 +1,6 @@
 package com.review.reviewservice;
 
-import com.review.reviewservice.Respository.TouristRepository;
+import com.review.reviewservice.Respository.ReviewRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ReviewServiceApplicationTests {
 	@Autowired
-	private TouristRepository touristRepository;
+	private ReviewRepository touristRepository;
 
 	@Test
 	void contextLoads() {

@@ -1,6 +1,7 @@
 // import { getMapData } from './callServer.js';
 import * as callSever from './callServer.js';
 import * as SearchFunc from './Search.js';
+import * as ReviewFunc from './Review.js'
 
 const HOME_PATH = "../IMG/Etc/";
 const detailShowEle=document.querySelector('.detailShow');
@@ -30,11 +31,6 @@ function isVisibleDetailEle(markerEle, markerData) {
     }
     setInfo(markerData);
 }
-function isVisibleDeatailEleForSearch(){
-    if(detailShowEle.style.display === 'none'){
-        detailShowEle.style.display = 'block';
-    }
-}
 
 window.onload = async function () {
     const map = new naver.maps.Map('map',{
@@ -50,10 +46,18 @@ window.onload = async function () {
         resultMarkers.forEach(marker => {
            let markerEle=new naver.maps.Marker(marker);
            markerEleArr.push(markerEle);
-           naver.maps.Event.addListener(markerEle, "click", function(e) {
-                // 클릭된 마커의 데이터 객체를 가져와서 정보를 표시
-                const markerData = markerEle.data;
-                isVisibleDetailEle(markerEle, markerData);
+           naver.maps.Event.addListener(markerEle, "click", function (e) {
+               // 클릭된 마커의 데이터 객체를 가져와서 정보를 표시
+               const markerData = markerEle.data;
+               isVisibleDetailEle(markerEle, markerData);
+
+               // if (document.querySelector('.detailShow').style.display === 'block') {
+               //     console.log("detailShowEle.style.display === 'block'");
+               //     ReviewFunc.removeReview();
+               //     const responseReviewData = await callSever.getReviewToTourist(markerData.tourDestNm);
+               //     ReviewFunc.setReviewData(responseReviewData);
+               //     ReviewFunc.resetReviewHeight();
+               // }
            });
         });
         setSearchAndCancelEvent(map);
@@ -143,6 +147,8 @@ function setSearchAndCancelEvent(map){
             isVisibleDetailEle(SearchedMarker,singleTouristData);
             forSearchVisible=false;
             map.setCenter( new naver.maps.LatLng(singleTouristData.lat, singleTouristData.lng));
+            document.querySelector('#inputLocation').value="";
+            SearchFunc.removeLiEle();
         });
     }
     if(cancelEle != null){
@@ -159,4 +165,7 @@ function setTouristNmList(data){
     return data.map(item => {
         return item.tourDestNm;
     });
+}
+async function setReviewFunc(){
+
 }

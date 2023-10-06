@@ -13,7 +13,6 @@ header {
     width: 100%;
     display: flex;
     position: relative;
-    z-index: 99;
     /*overflow: hidden;*/
     background-color: white;
 }
@@ -156,19 +155,13 @@ section:after {
 #autocompleteResults li:hover {
     background-color: #dcd5fb;
 }
-#map {
-    position: relative;
-    width: 100%;
-    height: 100%;
 
-}
 .detailShow {
     position: absolute;
     width: 24%;
     height: 100%;
     top: 0%;
     background-color: white;
-    overflow-y: scroll;
 }
 .imageBox {
     width: 100%;
@@ -200,7 +193,6 @@ section:after {
 .touristScoreVisit {
     width: 100%;
     height: 45%;
-
 }
 #visitCnts {
     line-height: 50%;
@@ -239,9 +231,75 @@ section:after {
     font-size: 10px;
     word-wrap: break-word;
 }
-.tab-info{
-    margin-left: 130px;
+.second-tab-box{
+    max-height: 510px;
+    overflow-y: auto;
 }
-.tab-second-info{
-    margin-left: 20px;
+.review-box{
+    width: 90%;
+    height: 165px;
+    border-bottom: 1px solid rgb(211, 216, 211);
+    margin-left: 27px;
+    position: relative;
+}
+.review-p{
+    width: 100%;
+    height: 100px;
+    margin-top: 15px;
+}
+.review-p p{
+    font-size:15px;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    height: 90px;
+    overflow: hidden;
+}
+.reviewer-info {
+    width: 97%;
+    height: 50px;
+    margin-left: 10px;
+
+}
+.reviewer-name {
+    height: 25px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: bold;
+}
+.reviewer-etc {
+    height: 25px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.score {
+    margin-left: 10px;
+}
+
+.arrow-button {
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    color: rgb(248, 179, 247);
+    font-size: 16px;
+    margin-left: auto;
+    margin-top: -16px;
+}
+
+/* 아래 부등호 모양 스타일링 */
+.arrow-button::before {
+    content: "\2193"; /* 아래 방향 부등호 유니코드 */
+    font-weight: bold;
+}
+
+/* 버튼에 호버 효과 */
+.arrow-button:hover {
+    cursor: pointer;
 }
