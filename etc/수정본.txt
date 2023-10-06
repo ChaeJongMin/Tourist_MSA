@@ -1,0 +1,77 @@
+window.onload = function () {
+  
+  // const Width = document.querySelector(".tab-content").clientWidth;
+  // const resultWidth = Width * 0.9 - 15;
+  // console.log(Width * 0.9 - 15);
+
+  // // 필요한 정보
+  // const fontSizeInPixels = 15; // 폰트 크기 (픽셀)
+  // const lineHeightInPixels = 1.2 * fontSizeInPixels; // 라인 높이 (보통 폰트 크기의 1.2배 정도)
+  // const maxWidthInPixels = resultWidth;
+
+  // const reviewBox = document.querySelectorAll('.review-box');
+  // reviewBox.forEach(ele => {
+  //   const reviewP = ele.querySelector('.review-p p');
+  //   const text = reviewP.textContent;
+  //   const textLengthInPixels = text.length * lineHeightInPixels;
+  //   console.log("textLengthInPixels : " + textLengthInPixels + " maxWidthInPixels: " + maxWidthInPixels);
+  //   const lines = Math.ceil(textLengthInPixels / maxWidthInPixels);
+
+  //   // 라인 수를 출력합니다.
+  //   console.log("총 라인 수: " + lines);
+  // });
+  
+
+  
+
+
+  const lastChildLi = document.querySelector('#myTab li:last-child');
+  const lastChildButtons = lastChildLi.querySelector('button');
+  
+  lastChildButtons.addEventListener('shown.bs.tab', function() {
+    console.log("리뷰 버튼 클릭");
+    const boxs=document.querySelectorAll('.review-box');
+    boxs.forEach(ele => {
+      const reviewP = ele.querySelector('.review-p p');
+      console.log("내용 : "+reviewP.textContent);
+      // 렌더링 완료될 때까지 기다립니다.
+      console.log("높이 : "+reviewP.clientHeight);
+    })
+})
+
+}
+
+function showMoreText(button) {
+  var reviewP = button.parentElement;
+  var reviewPp = reviewP.querySelector('p');
+  
+  const ppHeight=reviewPp.clientHeight;
+  console.log("감쳐진 높이: "+ppHeight);
+  if(ppHeight>90){
+    reviewPp.style.height=90+px;
+  }
+  const priorHeight=reviewP.clientHeight;
+  reviewPp.style.overflow = 'auto';
+  reviewPp.style.textOverflow = 'none';
+  reviewPp.style.display = 'inline';
+
+  console.log("풀 높이: "+reviewPp);
+
+  reviewP.style.overflow='auto';
+  reviewP.style.height='auto';
+  const reviewBox = reviewP.parentElement;
+  const defaultHeight=reviewBox.clientHeight;
+
+  console.log("defaultHeight : "+defaultHeight);
+  console.log("reviewP.clientHeight: "+reviewP.clientHeight);
+
+
+  const changeHeight = reviewP.clientHeight-priorHeight
+  reviewBox.style.height = (defaultHeight+changeHeight)+'px';
+
+
+  //버튼 제거
+  button.remove();
+  
+}
+
