@@ -4,7 +4,6 @@ const searchParent=document.querySelector('#search');
 autocompleteResults.style.display='none';
 
 export function setSearchEvent(data){
-    const autocompleteResults = document.querySelector('#autocompleteResults');
     searchInput.addEventListener('input', function() {
         const inputValue = searchInput.value;
         const touristNmArray=data;
@@ -79,8 +78,7 @@ function initSearch(){
     autocompleteResults.style.display = 'none';
 }
 export function removeLiEle(){
-    const autocompleteResults = document.querySelector('#autocompleteResults');
-    autocompleteResults.querySelectorAll('li').forEach(ele=>{
+    document.querySelector('#autocompleteResults').querySelectorAll('li').forEach(ele=>{
         ele.remove();
     });
 }

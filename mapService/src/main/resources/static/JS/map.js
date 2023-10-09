@@ -5,12 +5,51 @@ import * as ReviewFunc from './Review.js'
 
 const HOME_PATH = "../IMG/Etc/";
 const detailShowEle=document.querySelector('.detailShow');
+const observer = new MutationObserver(handleMutations);
+const config = { childList: true, subtree: true }; // 하위 요소에서도 변화를 감지
+const myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+    keyboard: false,
+    backdrop : "static"
+})
+const InfoTabTriggerEl =  new bootstrap.Tab(document.querySelector('#info-tab'));
 
+let reviewBoxSize;
 let touristNmArr=[];
 let currentMarker = null;
 let forSearchVisible=false;
 let markerEleArr=[];
-let certainMakrerEle;
+let compareBtbCnt=0;
+let targetBtnCnt;
+//Mutation 외 Resize를 통해 리뷰 높이 변경 시 감지 필요하므로 나중에 구현
+
+observer.observe(document.querySelector('.second-tab-box'), config);
+
+function handleMutations() {
+    const reviewBoxElements = document.querySelectorAll('.review-p p'); // review-box 클래스를 가진 모든 요소를 선택
+    compareBtbCnt = document.querySelectorAll('.arrow-button').length;
+    //버튼 추가 감시
+    if(targetBtnCnt !== -1){
+        if(targetBtnCnt !== compareBtbCnt)
+            myModal.show();
+        else{
+            myModal.hide();
+            //-1로 지정하여 버튼 삭제 일떄는 무시
+            targetBtnCnt = -1;
+        }
+
+    }
+    //리뷰 삭제 또는 추가 감시
+    else {
+        if (reviewBoxElements.length !== reviewBoxSize ) {
+            // review-box 클래스를 가진 요소의 개수가 reviewBoxSize와 같지 않으면 showLoadingScreen() 호출
+            myModal.show();
+        }
+        else {
+            // review-box 클래스를 가진 요소의 개수가 reviewBoxSize와 같으면 hideLoadingScreen() 호출
+            myModal.hide();
+        }
+    }
+}
 
 function isVisibleDetailEle(markerEle, markerData) {
     // console.log("markerEle: "+markerEle.data.tourDestNm);
@@ -46,18 +85,25 @@ window.onload = async function () {
         resultMarkers.forEach(marker => {
            let markerEle=new naver.maps.Marker(marker);
            markerEleArr.push(markerEle);
-           naver.maps.Event.addListener(markerEle, "click", function (e) {
+           naver.maps.Event.addListener(markerEle, "click", async function (e) {
                // 클릭된 마커의 데이터 객체를 가져와서 정보를 표시
                const markerData = markerEle.data;
                isVisibleDetailEle(markerEle, markerData);
+               if (document.querySelector('.detailShow').style.display === 'block') {
+                   reviewBoxSize=0;
+                   ReviewFunc.removeReview();
 
-               // if (document.querySelector('.detailShow').style.display === 'block') {
-               //     console.log("detailShowEle.style.display === 'block'");
-               //     ReviewFunc.removeReview();
-               //     const responseReviewData = await callSever.getReviewToTourist(markerData.tourDestNm);
-               //     ReviewFunc.setReviewData(responseReviewData);
-               //     ReviewFunc.resetReviewHeight();
-               // }
+                   const responseReviewData = await callSever.getReviewToTourist(markerData.tourDestNm);
+                   reviewBoxSize=responseReviewData.length;
+
+                   ReviewFunc.setReviewData(responseReviewData);
+                   ReviewFunc.resetReviewHeight();
+                   targetBtnCnt=ReviewFunc.btnCnt;
+
+               } else {
+                   //첫번쨰 탭 클릭
+                   InfoTabTriggerEl.show();
+               }
            });
         });
         setSearchAndCancelEvent(map);
@@ -138,16 +184,16 @@ function setSearchAndCancelEvent(map){
             const touristNm = document.querySelector('#inputLocation').value;
             const singleTouristData = await callSever.getSpecificMapData(touristNm);
             // const SearchedMarker = markerEleArr.filter(marker => marker.data.tourDestNm === singleTouristData.tourDestNm);
-            const SearchedMarker = markerEleArr.find(markerEle => {
-                return markerEle.data.tourDestNm === singleTouristData.tourDestNm;
 
+            markerEleArr.find(markerEle => {
+                if(markerEle.data.tourDestNm === singleTouristData.tourDestNm){
+                    markerEle.trigger('click');
+                }
             });
             // console.log(JSON.stringify(SearchedMarker, null, 2));
-            forSearchVisible=true;
-            isVisibleDetailEle(SearchedMarker,singleTouristData);
-            forSearchVisible=false;
             map.setCenter( new naver.maps.LatLng(singleTouristData.lat, singleTouristData.lng));
             document.querySelector('#inputLocation').value="";
+
             SearchFunc.removeLiEle();
         });
     }
@@ -165,7 +211,4 @@ function setTouristNmList(data){
     return data.map(item => {
         return item.tourDestNm;
     });
-}
-async function setReviewFunc(){
-
 }

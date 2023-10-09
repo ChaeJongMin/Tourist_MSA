@@ -13,6 +13,7 @@ header {
     width: 100%;
     display: flex;
     position: relative;
+    z-index: 99;
     /*overflow: hidden;*/
     background-color: white;
 }
@@ -149,13 +150,17 @@ section:after {
 }
 #autocompleteResults li:last-child {
     border-bottom: none; /* 마지막 항목의 라인 제거 */
-
 }
 
 #autocompleteResults li:hover {
     background-color: #dcd5fb;
 }
+#map {
+    position: relative;
+    width: 100%;
+    height: 100%;
 
+}
 .detailShow {
     position: absolute;
     width: 24%;
@@ -193,6 +198,7 @@ section:after {
 .touristScoreVisit {
     width: 100%;
     height: 45%;
+
 }
 #visitCnts {
     line-height: 50%;
@@ -203,6 +209,7 @@ section:after {
 .detailIntr{
     width: 100%;
     height: 61%;
+    position: relative;
 
 }
 .detail-info{
@@ -234,6 +241,7 @@ section:after {
 .second-tab-box{
     max-height: 510px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 .review-box{
     width: 90%;
@@ -251,8 +259,6 @@ section:after {
     font-size:15px;
     word-wrap: break-word;
     text-overflow: ellipsis;
-    height: 90px;
-    overflow: hidden;
 }
 .reviewer-info {
     width: 97%;

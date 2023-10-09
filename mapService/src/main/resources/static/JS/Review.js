@@ -1,30 +1,11 @@
+export let btnCnt=0;
+let btnList=[];
 export function removeReview(){
         console.log("removeReview 실행");
         const reviewBoxParent = document.querySelector('.second-tab-box');
         reviewBoxParent.querySelectorAll('.review-box').forEach(ele => {
                 ele.remove();
         })
-}
-
-function activeButton(button){
-        const reviewP = button.parentElement;
-        const  reviewPp = reviewP.querySelector('p');
-
-        const priorHeight=reviewP.clientHeight;
-        reviewPp.style.overflow = 'auto';
-        reviewPp.style.textOverflow = 'none';
-        reviewPp.style.display = 'inline';
-
-        reviewP.style.overflow='auto';
-        reviewP.style.height='auto';
-        const reviewBox = reviewP.parentElement;
-        const defaultHeight=reviewBox.clientHeight;
-
-        const changeHeight = reviewP.clientHeight-priorHeight
-        reviewBox.style.height = (defaultHeight+changeHeight)+'px';
-
-        //버튼 제거
-        button.remove();
 }
 export function setReviewData(data){
         console.log("setReviewData 실행");
@@ -80,17 +61,48 @@ export function setReviewData(data){
 export function resetReviewHeight(){
         const reviewList = document.querySelectorAll('.review-box');
         console.log("reviewList : "+reviewList.length);
-        reviewList.forEach(reviewBox => {
-                const pElement = reviewBox.querySelector('.review-p p');
-                console.log("pElment 내용 : "+pElement.textContent);
+        const tabEl = document.querySelector('#review-tab')
+        tabEl.addEventListener('shown.bs.tab', function (event) {
+                reviewList.forEach(reviewBox => {
+                        const pElement = reviewBox.querySelector('.review-p p');
+                        if(pElement.clientHeight>90){
+                                btnCnt++;
+                                btnList.push(reviewBox);
+                        }
+                });
+                console.log("btnCnt : "+btnCnt);
+                if(btnCnt > 0) {
+                        btnList.forEach(reviewBox => {
+                                const pElement = reviewBox.querySelector('.review-p p');
+                                pElement.style.height=90+"px";
+                                pElement.style.overflow='hidden';
+                                const moreBtn = document.createElement("button");
+                                moreBtn.classList.add("arrow-button");
+                                moreBtn.addEventListener("click",function (event) {
+                                        activeButton(event.target);
+                                })
+                                pElement.insertAdjacentElement('afterend', moreBtn);
+                        });
+                } else btnCnt = -1;
+        })
+}
+function activeButton(button){
+        const reviewP = button.parentElement;
+        const  reviewPp = reviewP.querySelector('p');
 
-                if(pElement.clientHeight>90){
-                        pElement.style.height=90+"px";
-                        const moreBtn = document.createElement("button");
-                        moreBtn.classList.add("arrow-button");
-                        moreBtn.addEventListener("click",function (event) {
-                                activeButton(event.target);
-                        })
-                }
-        });
+        const priorHeight=reviewP.clientHeight;
+        reviewPp.style.overflow = 'auto';
+        reviewPp.style.textOverflow = 'none';
+        reviewPp.style.display = 'inline';
+
+        reviewP.style.overflow='auto';
+        reviewP.style.height='auto';
+        const reviewBox = reviewP.parentElement;
+        const defaultHeight=reviewBox.clientHeight;
+
+        const changeHeight = reviewP.clientHeight-priorHeight
+        reviewBox.style.height = (defaultHeight+changeHeight)+'px';
+
+        //버튼 제거
+        button.remove();
 }
