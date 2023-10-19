@@ -1,6 +1,7 @@
 package com.userinfo.userservice.Controller.Api;
 
 import com.userinfo.userservice.Dto.Request.SaveDto;
+import com.userinfo.userservice.Dto.Request.UpdateDto;
 import com.userinfo.userservice.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,13 +11,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user-service")
 @Slf4j
 public class UserApi {
     private final UserService userService;
     // 유저 정보
-    @GetMapping("/api/user")
-    public Long getUser(){
-        return (long)1;
+    @GetMapping("/api/user/{userId}")
+    public ResponseEntity<?> getUser(@PathVariable String userId){
+        log.info("/api/user/{userId} 호출");
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByUserId(userId));
     }
     // 회원가입
     @PostMapping("/api/user")
@@ -25,8 +28,10 @@ public class UserApi {
         return ResponseEntity.status(HttpStatus.OK).body(userService.save(saveDto));
     }
     // 정보 수정
-    @PutMapping("/api/user/{id}")
-    public Long updateUser(@PathVariable Long id){
-        return (long)1;
+    @PutMapping("/api/user/{userId}")
+    public ResponseEntity<?> updateUser(@RequestBody UpdateDto updateDto, @PathVariable String userId){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.update(userId, updateDto));
     }
+
+
 }

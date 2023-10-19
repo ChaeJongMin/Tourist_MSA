@@ -9,10 +9,10 @@ public interface UserService extends UserDetailsService {
     //회원가입
     Long save(SaveDto saveDto);
     //유저 정보 찾기
-    UserDto getUserById(Long id);
+    UserDto getUserByUserId(String id);
     String getUserNameByEmail(String email);
 
     //유저 정보 수정
-    Long update(Long id, UpdateDto updateDto);
+    Long update(String userId, UpdateDto updateDto);
 
 }

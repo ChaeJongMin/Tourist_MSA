@@ -1,19 +1,18 @@
 package com.review.reviewservice.Service;
 
-import com.review.reviewservice.Dto.RequestReviewDto;
-import com.review.reviewservice.Dto.RequestUpdateDto;
-import com.review.reviewservice.Dto.ResponseReviewDto;
+import com.review.reviewservice.Dto.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public interface ReviewService {
-    List<ResponseReviewDto> getTouristToReviews(String tourDestNm);
+    ResponseTouristReviewDto getTouristToReviews(String tourDestNm, String userId);
+    List<ResponseReviewToUserDto> getReviewToUserDto(String userId);
     @Transactional
     Long save(RequestReviewDto requestReviewDto);
 
     @Transactional
-    Long update(Long id, RequestUpdateDto requestUpdateDto);
+    ResponseUpdateDto update(Long id, RequestUpdateDto requestUpdateDto);
 
     @Transactional
     Long delete(Long id);

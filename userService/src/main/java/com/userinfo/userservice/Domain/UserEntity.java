@@ -19,9 +19,9 @@ public class UserEntity {
     private String name;
     private String phoneNumber;
 
-    public void update(String name, String passwd){
-        this.name=name;
-        this.passwd=passwd;
+    public void update(String email, String phoneNumber){
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
     @Builder

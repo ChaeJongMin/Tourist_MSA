@@ -2,6 +2,7 @@
 import * as callSever from './callServer.js';
 import * as SearchFunc from './Search.js';
 import * as ReviewFunc from './Review.js'
+import {setAddReviewEvent} from './addReview.js'
 
 const HOME_PATH = "../IMG/Etc/";
 const detailShowEle=document.querySelector('.detailShow');
@@ -12,6 +13,8 @@ const myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
     backdrop : "static"
 })
 const InfoTabTriggerEl =  new bootstrap.Tab(document.querySelector('#info-tab'));
+const ReviewTabTriggerEl = new bootstrap.Tab(document.querySelector('#review-tab'));
+const userId = document.querySelector('#user-id').textContent.split(" ")[0];
 
 let reviewBoxSize;
 let touristNmArr=[];
@@ -19,7 +22,8 @@ let currentMarker = null;
 let forSearchVisible=false;
 let markerEleArr=[];
 let compareBtbCnt=0;
-let targetBtnCnt;
+let targetBtnCnt = -1;
+let isReviewed;
 //Mutation 외 Resize를 통해 리뷰 높이 변경 시 감지 필요하므로 나중에 구현
 
 observer.observe(document.querySelector('.second-tab-box'), config);
@@ -28,13 +32,14 @@ function handleMutations() {
     const reviewBoxElements = document.querySelectorAll('.review-p p'); // review-box 클래스를 가진 모든 요소를 선택
     compareBtbCnt = document.querySelectorAll('.arrow-button').length;
     //버튼 추가 감시
+    targetBtnCnt = ReviewFunc.btnCnt;
     if(targetBtnCnt !== -1){
         if(targetBtnCnt !== compareBtbCnt)
             myModal.show();
         else{
             myModal.hide();
             //-1로 지정하여 버튼 삭제 일떄는 무시
-            targetBtnCnt = -1;
+            // targetBtnCnt = -1;
         }
 
     }
@@ -88,18 +93,26 @@ window.onload = async function () {
            naver.maps.Event.addListener(markerEle, "click", async function (e) {
                // 클릭된 마커의 데이터 객체를 가져와서 정보를 표시
                const markerData = markerEle.data;
+               //이미 댓글이 있으면 댓글 버튼 없애기
+
                isVisibleDetailEle(markerEle, markerData);
                if (document.querySelector('.detailShow').style.display === 'block') {
                    reviewBoxSize=0;
                    ReviewFunc.removeReview();
+                   const responseReviewData = await callSever.getReviewToTourist(markerData.tourDestNm,userId);
+                   reviewBoxSize=responseReviewData.reviewList.length;
 
-                   const responseReviewData = await callSever.getReviewToTourist(markerData.tourDestNm);
-                   reviewBoxSize=responseReviewData.length;
+                   isReviewed = responseReviewData.isReviewed;
+                   if(isReviewed){
+                       console.log("map.js 참");
+                   } else {
+                       console.log("map.js 거짓");
+                   }
+                   ReviewFunc.setReviewData(responseReviewData.reviewList,userId);
 
-                   ReviewFunc.setReviewData(responseReviewData);
                    ReviewFunc.resetReviewHeight();
-                   targetBtnCnt=ReviewFunc.btnCnt;
-
+                   //targetBtnCnt=ReviewFunc.btnCnt;
+                   setAddReviewEvent(isReviewed);
                } else {
                    //첫번쨰 탭 클릭
                    InfoTabTriggerEl.show();
@@ -107,7 +120,6 @@ window.onload = async function () {
            });
         });
         setSearchAndCancelEvent(map);
-        //찾기, 삭제 버튼 클릭 이벤트 설정
     } catch (error) {
         console.error('데이터 가져오기 실패:', error);
     }
@@ -211,4 +223,8 @@ function setTouristNmList(data){
     return data.map(item => {
         return item.tourDestNm;
     });
+}
+export function reloadReview(){
+    currentMarker.trigger('click');
+    ReviewTabTriggerEl.show();
 }

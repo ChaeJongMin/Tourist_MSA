@@ -1,0 +1,257 @@
+*{padding: 0;  margin: 0; font-family: 'Raleway', sans-serif;}
+html, body {
+    height: 100%;
+}
+a{text-decoration: none;}
+
+header {
+    width: 84%;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    overflow: hidden;
+    border-bottom:1px solid #e0e0e0;
+    box-shadow: 0px 5px 6px -3px rgba(0, 0, 0, 0.1);
+}
+
+#logo {
+    position: relative;
+    height: 70%;
+    width: 14%;
+    float: left;
+    top:10%;
+
+}
+
+#logo span {
+    line-height: 400%;
+    color: #f8a9f2;
+    font-size: 26px;
+}
+
+#my-page-text {
+    position: relative;
+    height: 70%;
+    width: 8%;
+    float: left;
+    padding-left: 10px;
+    line-height: 430%;
+    top:30%;
+    border-left:1px solid #e0e0e0;
+    border-right:1px solid #e0e0e0;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1); /* 가로, 세로 offset 및 그림자 색상 및 투명도 설정 */
+}
+
+#my-page-text a {
+    font-size: 20px;
+}
+
+#go-map {
+    position: relative;
+    float : left;
+    width: 78%;
+    height: 70%;
+    top:30%;
+}
+
+#go-map a{
+    position: relative;
+    left: 30%;
+    top: 5%;
+}
+
+#go-map a:hover{
+    cursor: pointer;
+}
+
+#logo::after {
+    content:'';
+    display:block;
+    clear:both;
+}
+
+section {
+    width: 84%;
+    height: 800px;
+    background-color: #E5ECEF;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#my-info {
+    position: relative;
+    width: 45%;
+    height: 35%;
+    left: 3%;
+    top : 5%;
+    float: left;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.info-title {
+    width: 100%;
+    height: 20%;
+}
+/* .info-title ::after {
+  content:'';
+  display:block;
+  clear:both;
+} */
+.id-img {
+    float: left;
+    display: block;
+    margin-right: 5%;
+    margin-left : 5%
+}
+
+.info-title span{
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 230%;
+    font-family:"Josefin Sans";
+}
+
+.myInfo-edit-btn {
+    height: 70%;
+    width: 10%;
+    background-color: rgb(191, 142, 236);
+    border-radius: 15px;
+    border: none;
+    position: relative;
+    left: 50%;
+    top : -15%;
+    font-family:"Josefin Sans";
+    color: white;
+}
+
+.myInfo-edit-btn:hover{
+    cursor: pointer;
+}
+
+.info-box {
+    width: 100%;
+    height: 60%;
+    margin-top: 4%;
+}
+
+.info-individual {
+    width: 40%;
+    height: 33%;
+    float: left;
+    position: relative;
+    margin-right: 1%;
+    margin-left : 5%;
+    margin-bottom: 5%;
+}
+.indiv-title{
+    color: #40494E;
+    font-family:"Josefin Sans";
+    font-weight: 600;
+}
+.info-value {
+    padding-left: 2%;
+    font-family:"Josefin Sans";
+}
+.info-box ::after {
+    content:'';
+    display:block;
+    clear:both;
+}
+
+#add-info {
+    position: relative;
+    background-color: white;
+    width: 45%;
+    height: 35%;
+    left : 7%;
+    top : 5%;
+    float: left;
+}
+
+.clear-box {
+    content:'';
+    display:block;
+    clear:both;
+}
+
+#my-review {
+    position: relative;
+    width: 94%;
+    height: 50%;
+    background-color: white;
+    top : 10%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: hidden;
+    overflow-y:auto;
+}
+
+.review-detail{
+    width: 30%;
+    height: 40%;
+    float: left;
+    background-color: #eff7fa;
+    border-radius: 10px;
+    position: relative;
+    margin-left: 2%;
+    margin-right: 1%;
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+
+.review-detail:hover{
+    cursor: pointer;
+}
+
+/* 관광지명 , 별점, 날짜 , 텍스트 */
+.reviewed-tourist-name{
+    height: 20%;
+    width: 100%;
+    text-align: center;
+    padding: 1%;
+    font-weight: bold;
+}
+.reviewed-tourist-etc{
+    height: auto;
+    width: 100%;
+
+}
+.info-text{
+    margin-left: 10%;
+    display: block;
+}
+.reviewed-tourist-text{
+    height: 45%;
+    width: 90%;
+    margin: 5px auto;
+    font-size:15px;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* 라인수 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#modal-review-text {
+    resize: none;
+
+}
+
+.ui-tooltip-content {
+    color: white;
+}
+
+#star-rating {
+    width: 70%;
+}
+.star-score {
+    width: 25%;
+    margin-left: 3%;
+    position: absolute;
+    top: 27%;
+    left: 65%;
+    height: 29px;
+}

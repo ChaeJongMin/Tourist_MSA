@@ -1,11 +1,8 @@
 package com.review.reviewservice.Service;
 
 import com.review.reviewservice.Domain.ReviewEntity;
-import com.review.reviewservice.Domain.TouristEntity;
 import com.review.reviewservice.Domain.UserEntity;
-import com.review.reviewservice.Dto.RequestReviewDto;
-import com.review.reviewservice.Dto.RequestUpdateDto;
-import com.review.reviewservice.Dto.ResponseReviewDto;
+import com.review.reviewservice.Dto.*;
 import com.review.reviewservice.Respository.ReviewRepository;
 import com.review.reviewservice.Respository.TouristRepository;
 import com.review.reviewservice.Respository.UserRepository;
@@ -17,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @Slf4j
@@ -28,35 +26,56 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public Long save(RequestReviewDto requestReviewDto) {
-        TouristEntity tourist = touristRepository.findByTourDestNm(requestReviewDto.getTourDestNm())
-                .orElseThrow(() -> new IllegalArgumentException("해당 관광지는 존재하지 않습니다."));
-
-        UserEntity user = userRepository.findByName(requestReviewDto.getUserNm())
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저는 존재하지 않습니다."));
-        ReviewEntity reviewEntity = requestReviewDto.toReviewEntity(user.getId(), tourist.getId());
+        Long tourId = findByUserOrTourId(requestReviewDto.getTourDestNm(),false);
+        Long userId=findByUserOrTourId(requestReviewDto.getUserNm(),true);
+        ReviewEntity reviewEntity = requestReviewDto.toReviewEntity(userId, tourId);
         reviewRepository.save(reviewEntity);
         return reviewEntity.getId();
     }
 
     @Override
-    public List<ResponseReviewDto> getTouristToReviews(String tourDestNm){
-        TouristEntity tourist = touristRepository.findByTourDestNm(tourDestNm)
-                .orElseThrow(() -> new IllegalArgumentException("해당 관광지는 존재하지 않습니다."));
-        Long tourId = tourist.getId();
-
-        return reviewRepository.findByTouristId(tourId).stream()
+    public ResponseTouristReviewDto getTouristToReviews(String tourDestNm, String userId){
+        Long tourId = findByUserOrTourId(tourDestNm, false);
+        AtomicBoolean flag= new AtomicBoolean(false);
+        List<ResponseReviewDto> reviewList = reviewRepository.findByTouristId(tourId).stream()
                 .map(review -> {
                     LocalDateTime dateToUse = review.isUpdate() ? review.getUpdateDates() : review.getCreateDates();
 
                     // 리뷰와 관련된 사용자 정보를 한 번에 가져옵니다.
                     UserEntity user = userRepository.findById(review.getUserId())
                             .orElseThrow(() -> new IllegalArgumentException("해당 관광지는 존재하지 않습니다."));
-
+                    if(userId.equals(user.getName()))
+                        flag.set(true);
                     // ResponseReviewDto를 생성하고 사용자 이름을 포함하여 반환합니다.
                     return new ResponseReviewDto(review, convertDate(dateToUse), user.getName());
                 })
                 .toList();
-}
+        return new ResponseTouristReviewDto(flag.get(),reviewList);
+    }
+
+    @Override
+    public List<ResponseReviewToUserDto> getReviewToUserDto(String userId) {
+        return reviewRepository.findByUserId(findByUserOrTourId(userId,true)).stream()
+                .map(review-> {
+                    String tourDestNm = findTourDestNmByTourId(review.getTouristId());
+                    LocalDateTime dateToUse = review.isUpdate() ? review.getUpdateDates() : review.getCreateDates();
+                    return new ResponseReviewToUserDto(review, convertDate(dateToUse),tourDestNm);
+                })
+                .toList();
+    }
+
+    public Long findByUserOrTourId(String target, boolean flag){
+        if(flag){
+            return userRepository.findByName(target)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 유저는 존재하지 않습니다.")).getId();
+        }
+        return touristRepository.findByTourDestNm(target)
+                .orElseThrow(() -> new IllegalArgumentException("해당 관광지는 존재하지 않습니다.")).getId();
+    }
+    public String findTourDestNmByTourId(Long id){
+        return touristRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 관광지는 존재하지 않습니다.")).getTourDestNm();
+    }
 
     public String convertDate(LocalDateTime localDateTime){
         // 한글로 요일 표시를 위해 Locale을 한국으로 설정합니다.
@@ -68,17 +87,15 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public Long update(Long id, RequestUpdateDto requestUpdateDto) {
+    public ResponseUpdateDto update(Long id, RequestUpdateDto requestUpdateDto) {
         ReviewEntity review=reviewRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("수정할 리뷰는 없습니다. id=" + id));
         review.update(requestUpdateDto.getScore(), requestUpdateDto.getReviewTexts());
-        return review.getId();
+        return new ResponseUpdateDto(review, convertDate(review.getUpdateDates()) );
     }
 
     @Override
     public Long delete(Long id) {
         ReviewEntity review=reviewRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("삭제할 리뷰는 없습니다. id=" + id));
-
-        //리뷰 점수 수정을 위해 Tourist와 데이터 동기화 필요!!
 
         reviewRepository.delete(review);
         return id;

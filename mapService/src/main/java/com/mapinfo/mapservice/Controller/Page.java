@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/map")
+@RequestMapping("/map-service")
 public class Page {
     @GetMapping("/Map")
     public String showMap(){return "Map/Map";}

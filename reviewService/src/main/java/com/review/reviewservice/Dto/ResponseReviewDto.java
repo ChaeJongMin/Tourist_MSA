@@ -3,15 +3,16 @@ package com.review.reviewservice.Dto;
 import com.review.reviewservice.Domain.ReviewEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class ResponseReviewDto {
     private double score;
     private String reviewText;
     private boolean isUpdate;
     private String dateFormat;
-
     private String writer;
 
     public ResponseReviewDto(ReviewEntity review,String dateFormat, String writer){
