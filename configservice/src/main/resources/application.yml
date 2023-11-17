@@ -1,0 +1,13 @@
+server:
+  port: 8811
+spring:
+  application:
+    name: config-service
+  profiles:
+    active: native, encryption
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: D:\Project\native-file-repos
+

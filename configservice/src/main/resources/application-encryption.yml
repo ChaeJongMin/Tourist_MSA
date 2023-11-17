@@ -1,0 +1,11 @@
+#spring:
+#  cloud:
+#    config:
+#      server:
+#        encrypt:
+#          enabled: false
+encrypt:
+  key-store:
+    location: file:///${user.home}/keystore/apiEncryptionKey.jks
+    alias: apiEncryptionKey
+    password: cgs2760
