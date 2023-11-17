@@ -2,6 +2,7 @@ package com.userinfo.userservice.Controller.Api;
 
 import com.userinfo.userservice.Dto.Request.SaveDto;
 import com.userinfo.userservice.Dto.Request.UpdateDto;
+import com.userinfo.userservice.MessageQueue.KafkaProducer;
 import com.userinfo.userservice.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

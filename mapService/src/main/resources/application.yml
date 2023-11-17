@@ -1,24 +1,22 @@
 server:
-  port: 9004
+  port: 0
 spring:
   thymeleaf:
     enabled : true
     prefix: classpath:templates/
     suffix: .html
   application:
-    name: mapService
-  jpa:
-    hibernate:
-      ddl-auto: update
-    generate-ddl: true
-    show-sql: false
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    properties:
-      hibernate:
-        format_sql: true
-    open-in-view: false
-  datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/tourist
-    username: root
-    password: test1234!
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: map-service
+  config:
+    import: optional:configserver:http:/localhost:8811
+  cloud:
+    config:
+      name: mapConfig
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone : http://localhost:8761/eureka

@@ -4,8 +4,10 @@ import com.userinfo.userservice.Client.ReviewServiceClient;
 import com.userinfo.userservice.Domain.UserEntity;
 import com.userinfo.userservice.Dto.Request.SaveDto;
 import com.userinfo.userservice.Dto.Request.UpdateDto;
+import com.userinfo.userservice.Dto.Response.KafkaUserDto;
 import com.userinfo.userservice.Dto.Response.ResponseReviewToUserDto;
 import com.userinfo.userservice.Dto.Response.UserDto;
+import com.userinfo.userservice.MessageQueue.KafkaProducer;
 import com.userinfo.userservice.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +30,19 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final ReviewServiceClient reviewServiceClient;
 
+    private final KafkaProducer kafkaProducer;
+
     @Override
     public Long save(SaveDto saveDto) {
         if(!userRepository.existsByEmail(saveDto.getEmail())){
             saveDto.setPasswd(passwordEncoder.encode(saveDto.getPasswd()));
             log.info("회원가입 성공!!!");
-            return userRepository.save(saveDto.toUserEntity()).getId();
+            UserEntity userEntity = userRepository.save(saveDto.toUserEntity());
+
+            //Kafka 메시지 send!!
+            kafkaProducer.sendNewUser("review-createUser-topic",new KafkaUserDto(userEntity));
+
+            return userEntity.getId();
         }
         log.info("save 메소드 예외 발생");
         throw new DuplicateKeyException("이미 이메일이 존재합니다.");
@@ -56,6 +65,11 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity =userRepository.findByName(userId)
                 .orElseThrow(()-> new IllegalArgumentException("해당 유저는 없습니다."));
         userEntity.update(updateDto.getEmail(), updateDto.getPhone());
+
+        KafkaUserDto kafkaUserDto = new KafkaUserDto(userEntity);
+
+        //Kafka 메시지 send!!
+        kafkaProducer.sendUpdateUser("review-updateUser-topic",kafkaUserDto);
         return userEntity.getId();
     }
 

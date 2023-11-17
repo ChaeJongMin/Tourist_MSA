@@ -7,21 +7,12 @@ spring:
     suffix: .html
   application:
     name: user-service
-  jpa:
-    hibernate:
-      ddl-auto: none
-    generate-ddl: true
-    show-sql: false
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    properties:
-      hibernate:
-        format_sql: true
-    open-in-view: false
-  datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/tourist
-    username: root
-    password: test1234!
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  config:
+    import: optional:configserver:http://localhost:8811
+  cloud:
+    config:
+      name: mapConfig
+      profile: default
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}

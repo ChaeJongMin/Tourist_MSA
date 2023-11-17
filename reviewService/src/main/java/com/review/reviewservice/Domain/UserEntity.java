@@ -20,7 +20,12 @@ public class UserEntity {
     private String email;
 
     @Builder
-    public UserEntity(String name, String email){
+    public UserEntity(Long id,String name, String email){
+        this.id = id;
+        this.name=name;
+        this.email=email;
+    }
+    public void update(String name, String email){
         this.name=name;
         this.email=email;
     }

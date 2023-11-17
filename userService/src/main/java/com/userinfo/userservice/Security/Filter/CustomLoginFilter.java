@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,9 +19,10 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+@Slf4j
 public class CustomLoginFilter extends AbstractAuthenticationProcessingFilter {
 
-    private static final String DEFAULT_LOGIN_REQUEST_URL = "/api/auth/login" ;
+    private static final String DEFAULT_LOGIN_REQUEST_URL = "/user-service/api/auth/login" ;
     private static final String HTTP_METHOD = "POST";
     private static final String CONTENT_TYPE = "application/json; charset=UTF-8";
     private static final String EMAIL_KEY = "email";
@@ -33,7 +35,7 @@ public class CustomLoginFilter extends AbstractAuthenticationProcessingFilter {
     }
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-
+        log.info("user-service 로그인 필터 작동");
         if(request.getContentType() == null || !request.getContentType().equals(CONTENT_TYPE)  ) {
             throw new AuthenticationServiceException("Authentication Content-Type not supported: " + request.getContentType());
         }
@@ -51,9 +53,11 @@ public class CustomLoginFilter extends AbstractAuthenticationProcessingFilter {
         String userPasswd = usernamePasswordMap.get(PASSWORD_KEY);
         userPasswd = (userPasswd != null) ? userPasswd : "";
         userPasswd = userPasswd.trim();
-
+        log.info("CustomLoginFilter : 받아온 아이디  "+ email);
+        log.info("CustomLoginFilter : 받아온 비밀번호  "+ userPasswd);
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(email, userPasswd);
 
         return this.getAuthenticationManager().authenticate(authRequest);
     }
+
 }

@@ -2,6 +2,7 @@ package com.userinfo.userservice.Security.AuthenticationProvider;
 
 import com.userinfo.userservice.Service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Slf4j
 public class CustomAuthenticationProvider implements AuthenticationProvider {
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -28,7 +30,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 () -> new UsernameNotFoundException("아이디와 비밀번호가 잘못되었습니다."));
         UserDetails userDetails=userService.loadUserByUsername(name);
         String passwd=userDetails.getPassword();
-
+        log.info("AuthenticationProvider 비밀번호 : "+ (String)authToken.getCredentials());
         if(!passwordEncoder.matches((String)authToken.getCredentials(),passwd)){
             throw new BadCredentialsException("Invalid Username / Password");
         }

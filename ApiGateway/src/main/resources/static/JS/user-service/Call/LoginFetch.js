@@ -4,27 +4,29 @@ const loginBtn = loginForm.querySelector('#loginBtn');
 const registerBtn = saveForm.querySelector('#registerBtn');
 
 loginBtn.addEventListener('click', async () => {
+    console.log("LoginFetch 작동");
     try {
         clearErrorMsg();
         const data = {
             email: loginForm.querySelector('.email').value,
-            password: loginForm.querySelector('.passwd').value
+            passwd: loginForm.querySelector('.passwd').value
         };
-
-        const result = await fetch('user-service/api/auth/login', {
+        console.log("받아온 정보 : "+data.email+" "+data.passwd);
+        const result = await fetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
             },
             body: JSON.stringify(data),
-        }).then(response =>{
-            return response.json();
         });
 
-        if(result.ok){
-            console.log(result.results);
+        console.log("다음으로 진행합니다. 상태: "+result.status);
+
+        if(result.status === 200){
+            console.log("맵 화면으로 이동합니다.");
+            window.location.href="/map-service/Map";
         } else {
-            console.log (result.results);
+            console.log ("실패!!! "+result.results);
             setErrorMessage(result.results, loginBtn);
         }
 
@@ -47,7 +49,7 @@ registerBtn.addEventListener('click', async () => {
         console.log("회원가입: "+data);
         console.log("회원가입: "+data.toString());
 
-        const result = await fetch('user-service/api/user', {
+        const result = await fetch('/user-service/api/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
