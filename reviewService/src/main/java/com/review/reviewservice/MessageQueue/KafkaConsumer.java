@@ -24,7 +24,7 @@ public class KafkaConsumer {
     private final UserRepository userRepository;
     private Map<Object, Object> map;
     private final Gson gson ;
-    @Transactional(readOnly = true)
+    @Transactional
     //특정 토픽 이름을 설정
     //해당 토픽에 메시지가 오면 CATCH(해당 메소드가 실행)
     @KafkaListener(topics = "review-createUser-topic")
@@ -35,16 +35,17 @@ public class KafkaConsumer {
         //받아온 메시지 페이로드에 존재하는 데이터를 map 형태로 변경
         try {
             map = gson.fromJson(kafkaMessage , new TypeToken<Map<Object, Object>>() {}.getType());
+            UserEntity entity = UserEntity.builder().
+                    id (((Number) map.get("id")).longValue()).
+                    name((String) map.get("name")).
+                    email((String) map.get("email")).
+                    build();
+            userRepository.save(entity);
+
         } catch (JsonSyntaxException ex) {
             ex.printStackTrace();
         }
-        UserEntity entity = UserEntity.builder().
-                id((long) map.get("id")).
-                name((String) map.get("name")).
-                email((String) map.get("email")).
-                build();
 
-        userRepository.save(entity);
 
     }
 
@@ -63,7 +64,7 @@ public class KafkaConsumer {
             ex.printStackTrace();
         }
 
-        UserEntity user = userRepository.findById((long) map.get("id")).orElseThrow(
+        UserEntity user = userRepository.findById(((Number) map.get("id")).longValue()).orElseThrow(
                 () -> new IllegalArgumentException("해다 유저는 없습니다."));
         user.update((String) map.get("name"), (String) map.get("email"));
 

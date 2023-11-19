@@ -20,7 +20,7 @@ public class KafkaConsumerConfig {
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         Map<String,Object> properties = new HashMap<>();
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "172.18.0.101:9092");
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "consumerGroupId");
         // Kafka에서 받아온 메시지는 JSON 형식으로 <KEY, VALUE> 형식
         // Producer에서 보낼 메시지를 직렬화로 압축하여 보내지는데 받아온 메시지는 역직렬화로 디코딩하여 값을 얻어온다.

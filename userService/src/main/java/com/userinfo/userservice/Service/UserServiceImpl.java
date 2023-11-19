@@ -46,7 +46,6 @@ public class UserServiceImpl implements UserService {
         }
         log.info("save 메소드 예외 발생");
         throw new DuplicateKeyException("이미 이메일이 존재합니다.");
-
     }
 
     @Override
@@ -65,7 +64,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity =userRepository.findByName(userId)
                 .orElseThrow(()-> new IllegalArgumentException("해당 유저는 없습니다."));
         userEntity.update(updateDto.getEmail(), updateDto.getPhone());
-
+        log.info("update: "+userEntity.getId()+" "+userEntity.getName());
         KafkaUserDto kafkaUserDto = new KafkaUserDto(userEntity);
 
         //Kafka 메시지 send!!

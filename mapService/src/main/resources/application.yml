@@ -8,10 +8,11 @@ spring:
   application:
     name: map-service
   config:
-    import: optional:configserver:http:/localhost:8811
+    import: optional:configserver:http://localhost:8811
   cloud:
     config:
       name: mapConfig
+      profile: default
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}

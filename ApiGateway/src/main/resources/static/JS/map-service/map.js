@@ -2,9 +2,10 @@
 import * as callSever from './Call/callServer.js';
 import * as SearchFunc from './Element/Search.js';
 import * as ReviewFunc from './Element/Review.js'
+import * as CookieFunc from '../common/Cookie.js'
 import {setAddReviewEvent} from './Element/addReview.js'
 
-const HOME_PATH = "../IMG/Etc/";
+const HOME_PATH = "../IMG/Map/Etc/";
 const detailShowEle=document.querySelector('.detailShow');
 const observer = new MutationObserver(handleMutations);
 const config = { childList: true, subtree: true }; // 하위 요소에서도 변화를 감지
@@ -14,7 +15,6 @@ const myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
 })
 const InfoTabTriggerEl =  new bootstrap.Tab(document.querySelector('#info-tab'));
 const ReviewTabTriggerEl = new bootstrap.Tab(document.querySelector('#review-tab'));
-const userId = document.querySelector('#user-id').textContent.split(" ")[0];
 
 let reviewBoxSize;
 let touristNmArr=[];
@@ -24,9 +24,13 @@ let markerEleArr=[];
 let compareBtbCnt=0;
 let targetBtnCnt = -1;
 let isReviewed;
-//Mutation 외 Resize를 통해 리뷰 높이 변경 시 감지 필요하므로 나중에 구현
 
+document.querySelector('#user-id').textContent = CookieFunc.getCookie('useridCookie');
+const userId = document.querySelector('#user-id').textContent.split(" ")[0];
+console.log("쿠키에서 찾아온 아이디 : "+userId);
+//Mutation 외 Resize를 통해 리뷰 높이 변경 시 감지 필요하므로 나중에 구현
 observer.observe(document.querySelector('.second-tab-box'), config);
+
 
 function handleMutations() {
     const reviewBoxElements = document.querySelectorAll('.review-p p'); // review-box 클래스를 가진 모든 요소를 선택
@@ -184,7 +188,7 @@ function setInfo(data){
     googleLink.href = "https://www.google.com/search?q=" + encodeURIComponent(searchTerm);
 
     const touristImg=document.querySelector('.touristImg');
-    touristImg.src="/IMG/Tourist/"+data.tourDestNm+".jpg";
+    touristImg.src="/IMG/MAP/Tourist/"+data.tourDestNm+".jpg";
 }
 
 function setSearchAndCancelEvent(map){
@@ -226,5 +230,5 @@ function setTouristNmList(data){
 }
 export function reloadReview(){
     currentMarker.trigger('click');
-    ReviewTabTriggerEl.show();
+    InfoTabTriggerEl.show();
 }

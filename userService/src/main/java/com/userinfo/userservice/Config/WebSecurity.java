@@ -64,7 +64,7 @@ public class WebSecurity {
                 .authorizeHttpRequests((authorizeRequests)->
                         authorizeRequests
                                 .requestMatchers("/actuator/**").permitAll()
-//                                .requestMatchers("/api/auth/login").permitAll()
+                                .requestMatchers("/api/auth/login").permitAll()
                                 .anyRequest().permitAll()
                 )
                 .addFilterAfter(getCustomAuthenticationFilter(authManager(http)), LogoutFilter.class);

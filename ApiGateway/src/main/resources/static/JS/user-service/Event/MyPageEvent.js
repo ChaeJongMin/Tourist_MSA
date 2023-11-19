@@ -96,14 +96,14 @@ export function reviewModalEvent(){
     });
 }
 //리뷰
-export function updateBtnEvent(){
+export function updateBtnEvent(userId){
     myInfoBtn.addEventListener('click',async function () {
 
         const email = document.querySelector('#edit-email').value;
         const phone = document.querySelector('#edit-tel').value
         updateUserInfo(email, phone);
 
-        await updateMyInfo();
+        await updateMyInfo(userId);
 
         myInfoModal.hide();
 

@@ -31,6 +31,8 @@ public class KafkaProducer {
     }
 
     public String setMessage(KafkaUserDto userDto){
+        log.info("보낼 객체 타입 확인 -> id: "+userDto.getId().getClass().getName() +" email : "+userDto.getEmail().getClass().getName()
+                +" name : "+ userDto.getName().getClass().getName());
         String jsonInString ="";
         try {
             jsonInString = gson.toJson(userDto);

@@ -46,8 +46,6 @@ registerBtn.addEventListener('click', async () => {
             name : saveForm.querySelector('.name').value,
             phoneNumber : saveForm.querySelector('.phoneNumber').value
         };
-        console.log("회원가입: "+data);
-        console.log("회원가입: "+data.toString());
 
         const result = await fetch('/user-service/api/user', {
             method: 'POST',
@@ -55,13 +53,18 @@ registerBtn.addEventListener('click', async () => {
                 'Content-Type': 'application/json; charset=UTF-8',
             },
             body: JSON.stringify(data),
-        }).then(response =>{
-            return response.json();
-        });
-
-        if(result.ok){
+        })
+        if(result.status===200){
             console.log(result.results);
             alert("회원가입 성공");
+            const x = document.getElementById("login");
+            const y = document.getElementById("register");
+            const z = document.getElementById("btn");
+
+            x.style.left = "50px";
+            y.style.left = "450px";
+            z.style.left = "0";
+
         } else {
             console.log("에러 작동");
             setErrorMessage(result.message,registerBtn);

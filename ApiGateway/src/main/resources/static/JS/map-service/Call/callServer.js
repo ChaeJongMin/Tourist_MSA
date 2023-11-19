@@ -43,17 +43,17 @@ export async function getSpecificMapData(touristNm){
 export async function getReviewToTourist (touristNm, userId){
     try{
         const encodedTouristNm = encodeURIComponent(touristNm);
-        console.log("getReviewToTourist 작동!! "+encodedTouristNm);
+        console.log("getReviewToTourist 작동!! "+touristNm);
 
         //review-service/api/
-        const response = await fetch('/review-service/'+encodedTouristNm+'/review/'+userId,{
+        const response = await fetch('/review-service/api/'+touristNm+'/review/'+userId,{
             method : 'GET' ,
             headers : {
                 'Content-Type': 'application/json; charset=UTF-8',
             } ,
         });
 
-        if (!response.ok) {
+        if (response.status !== 200) {
             throw new Error(`API 호출 실패: ${response.status}`);
         }
 
@@ -79,14 +79,14 @@ export async function saveReview (reviewModal){
             score : score
         }
         //review-service/api/
-        const response = await fetch('/review-service/review-service/api/review',{
+        const response = await fetch('/review-service/api/review',{
             method : 'POST' ,
             headers : {
                 'Content-Type': 'application/json; charset=UTF-8',
             } ,
             body : JSON.stringify(data),
         });
-        if (!response.ok) {
+        if (response.status !== 200) {
             throw new Error(`API 호출 실패: ${response.status}`);
         }
         return await response.json();

@@ -51,9 +51,9 @@ export function addReviewInfo(reviewInfos) {
 export function updateReviewInfo(data, reviewEle) {
     const etcEle = reviewEle.querySelector('.reviewed-tourist-etc');
     //점수
-    etcEle.querySelector('.info-text:first-child').textContent = data.score;
+    etcEle.querySelector('.info-text:first-child').textContent = "점수 : "+data.score;
     //날짜
-    etcEle.querySelector('.info-text:last-child').textContent = data.dateFormat;
+    etcEle.querySelector('.info-text:last-child').textContent = "작성 날짜 : "+data.dateFormat;
     //내용
     document.querySelector('.reviewed-tourist-text').textContent = data.reviewText;
 }

@@ -7,7 +7,7 @@ import lombok.Getter;
 public class KafkaUserDto {
 
     //id, 이름, 이메일
-    private long id;
+    private Long id;
     private String email;
     private String name;
 

@@ -73,7 +73,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         //인증 인스턴스에서 토큰을 받아와야한다.
         log.info("인증 인스턴스에서 토큰을 받아올게요");
         ResponseCookieDto responseCookieDto=authServiceCilent.respondAllToken(name);
-        generateCookie(responseCookieDto, response);
+        generateCookie(responseCookieDto, response, name);
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.setCharacterEncoding("UTF-8");
@@ -87,7 +87,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         response.getWriter().write(result);
     }
 
-    public void generateCookie(ResponseCookieDto responseCookieDto, HttpServletResponse response){
+    public void generateCookie(ResponseCookieDto responseCookieDto, HttpServletResponse response, String name){
         Cookie accessCookie = new Cookie("accesstoken", responseCookieDto.getAccess());
         accessCookie.setPath("/");
         accessCookie.setHttpOnly(true);
@@ -100,6 +100,12 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         refreshCookie.setHttpOnly(true);
         refreshCookie.setMaxAge(86400000);
         response.addCookie(refreshCookie);
+
+        Cookie nameCookie = new Cookie("useridCookie", name);
+        nameCookie.setPath("/");
+        nameCookie.setMaxAge(86400000);
+        response.addCookie(nameCookie);
+
     }
 
 }

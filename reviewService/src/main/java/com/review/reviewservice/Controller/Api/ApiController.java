@@ -17,7 +17,6 @@ import java.util.List;
 public class ApiController {
     private final ReviewService reviewService;
 
-    @CrossOrigin("*")
     @GetMapping("/api/{tourDestNm}/review/{userId}")
     public ResponseEntity<?> getReview(@PathVariable String tourDestNm, @PathVariable String userId){
         log.info("Get 작동: "+ tourDestNm +" "+userId);
@@ -34,7 +33,6 @@ public class ApiController {
         log.info("/api/review/{userId} 호출!!");
         return ResponseEntity.status(HttpStatus.OK).body(reviewService.getReviewToUserDto(userId));
     }
-    @CrossOrigin("*")
     @PostMapping("/api/review")
     public ResponseEntity<?> saveReview(@RequestBody RequestReviewDto requestReviewDto){
         log.info("Post 작동 : "+ requestReviewDto);
@@ -44,12 +42,13 @@ public class ApiController {
     @PutMapping("/api/review/{id}")
     public ResponseEntity<?> updateReview(@RequestBody RequestUpdateDto requestUpdateDto,
                                           @PathVariable Long id){
+        log.info("Put /api/review/{id} 작동 : "+requestUpdateDto.getScore()+" "+requestUpdateDto.getReviewTexts());
         return ResponseEntity.status(HttpStatus.OK).body(reviewService.update(id, requestUpdateDto));
     }
 
-    @CrossOrigin("*")
     @DeleteMapping("/api/review/{id}")
     public ResponseEntity<?> deleteReview(@PathVariable Long id){
+        log.info("Delete /api/review/{id} 작동");
         return ResponseEntity.status(HttpStatus.OK).body(reviewService.delete(id));
     }
 

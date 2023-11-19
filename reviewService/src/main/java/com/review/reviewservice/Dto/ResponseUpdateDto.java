@@ -1,7 +1,11 @@
 package com.review.reviewservice.Dto;
 
 import com.review.reviewservice.Domain.ReviewEntity;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class ResponseUpdateDto {
 
     private double score;

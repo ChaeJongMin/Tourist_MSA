@@ -1,6 +1,5 @@
-export async function getMyInfo(){
+export async function getMyInfo(userId){
     try {
-        const userId="dico2760";
         const response = await fetch('/user-service/api/user/'+userId, {
             method: 'GET',
             headers: {
@@ -19,9 +18,8 @@ export async function getMyInfo(){
         throw e;
     }
 }
-export async function updateMyInfo(){
+export async function updateMyInfo(userId){
     try {
-        const userId="dico2760";
         const email = document.querySelector('#edit-email').value;
         const phone = document.querySelector('#edit-tel').value;
 
@@ -60,7 +58,7 @@ export async function updateReview(reviewId){
             score : parseFloat(score)
         }
 
-        const response = await fetch('review-service/review-service/api/review/'+reviewId, {
+        const response = await fetch('/review-service/api/review/'+reviewId, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
@@ -68,7 +66,7 @@ export async function updateReview(reviewId){
             body : JSON.stringify(requestData),
         });
         console.log("받아온 상태값: "+response.status);
-        if (!response.ok) {
+        if (response.status !== 200) {
             throw new Error(`API 호출 실패: ${response.status}`);
         }
         return await response.json();
@@ -82,14 +80,14 @@ export async function updateReview(reviewId){
 export async function removeReview(reviewId){
     try {
 
-        const response = await fetch('review-service/review-service/api/review/'+reviewId, {
+        const response = await fetch('/review-service/api/review/'+reviewId, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
             },
         });
         console.log("받아온 상태값: "+response.status);
-        if (!response.ok) {
+        if (response.status !== 200) {
             throw new Error(`API 호출 실패: ${response.status}`);
         }
 
