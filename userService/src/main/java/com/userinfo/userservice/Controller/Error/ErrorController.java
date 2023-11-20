@@ -14,7 +14,7 @@ import java.util.Map;
 @RestControllerAdvice
 @Slf4j
 public class ErrorController extends ResponseEntityExceptionHandler {
-
+    //중복 예외처리
     @ExceptionHandler({ DuplicateKeyException.class })
     protected ResponseEntity<?> handleDuplicateException(DuplicateKeyException e) {
         log.info("중복 예외 발생");

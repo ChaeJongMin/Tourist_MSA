@@ -16,6 +16,7 @@ import java.util.Map;
 
 @EnableKafka
 @Configuration
+//카프카(Consumer)에 대한 환경정보를 관리하는 클래스
 public class KafkaConsumerConfig {
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {

@@ -16,19 +16,20 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class UserApi {
     private final UserService userService;
-    // 유저 정보
+
+    // 유저 정보를 탐색하는 API
     @GetMapping("/api/user/{userId}")
     public ResponseEntity<?> getUser(@PathVariable String userId){
         log.info("/api/user/{userId} 호출");
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserByUserId(userId));
     }
-    // 회원가입
+    // 회원가입하는 API
     @PostMapping("/api/user")
     public ResponseEntity<?> saveUser(@RequestBody SaveDto saveDto){
         log.info("/api/user 작동 " + saveDto);
         return ResponseEntity.status(HttpStatus.OK).body(userService.save(saveDto));
     }
-    // 정보 수정
+    // 유저 정보 수정하는 API
     @PutMapping("/api/user/{userId}")
     public ResponseEntity<?> updateUser(@RequestBody UpdateDto updateDto, @PathVariable String userId){
         return ResponseEntity.status(HttpStatus.OK).body(userService.update(userId, updateDto));

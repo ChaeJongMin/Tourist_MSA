@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+//클라이언트로부터 요청하기 위한 DTO 클래스
 public class ResponseTouristDto {
     private String tourDestNm;
     private Double lat;

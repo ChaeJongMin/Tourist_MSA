@@ -13,13 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class MapApi {
     private final MapService mapService;
-
+    //지도에 관광지를 표시하기 위해 모든 관광지 정보를 전달하는 API
     @GetMapping("/api/map")
     public ResponseEntity<?> getTouristInfo(){
         log.info("");
         return ResponseEntity.status(HttpStatus.OK).body(mapService.getTourist());
     }
 
+    //"찾기" 기능으로 찾은 관광지(단일) 정보를 전달하는 API
     @GetMapping("/api/map/{touristNm}")
     public ResponseEntity<?> getSingleTouristInfo(@PathVariable String touristNm){
         log.info("/api/map/{touristNm} : "+touristNm);

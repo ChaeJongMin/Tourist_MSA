@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @Entity
 @Slf4j
+//refresh_token_entity Table과 맵핑될 엔티티(객체)
 public class RefreshTokenEntity extends BaseTime{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

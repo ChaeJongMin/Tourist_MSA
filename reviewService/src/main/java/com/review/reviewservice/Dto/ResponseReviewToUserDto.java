@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+//마이페이지에서 자신의 쓴 리뷰 정보를 전달하기 위한 담긴 DTO 클래스
 public class ResponseReviewToUserDto {
     private Long reviewId;
     private String tourDestNm;

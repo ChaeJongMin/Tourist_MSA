@@ -21,6 +21,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
 
+//보안 구성을 정의하는 클래스
 @Configuration
 @RequiredArgsConstructor
 public class WebSecurity {
@@ -30,27 +31,32 @@ public class WebSecurity {
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    //커스텀 AuthenticationProvider()를 등록
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.authenticationProvider(getCustomAuthenticationProvider());
         return authenticationManagerBuilder.build();
     }
+    //CustomAuthenticationProvider 객체(빈) 생성
     @Bean
     public CustomAuthenticationProvider getCustomAuthenticationProvider(){
         return new CustomAuthenticationProvider(userService,bCryptPasswordEncoder);
     }
-    @Bean
-    public SuccessHandler getSuccessHandler(){
-        return new SuccessHandler(userService,authServiceCilent);
-    }
-    @Bean
-    public FailureHandler getFailureHandler(){
-        return new FailureHandler();
-    }
+
+//    @Bean
+//    public SuccessHandler getSuccessHandler(){
+//        return new SuccessHandler(userService,authServiceCilent);
+//    }
+//    @Bean
+//    public FailureHandler getFailureHandler(){
+//        return new FailureHandler();
+//    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
+                //cors 설정
                 .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowedOrigins(Collections.singletonList("http://host.docker.internal:8000"));
@@ -72,14 +78,16 @@ public class WebSecurity {
         return http.build();
 
     }
-        @Bean
-        public CustomLoginFilter getCustomLoginFilter(AuthenticationManager authenticationManager){
-            CustomLoginFilter customLoginFilter=new CustomLoginFilter();
-            customLoginFilter.setAuthenticationManager(authenticationManager);
-            customLoginFilter.setAuthenticationFailureHandler(getFailureHandler());
-            customLoginFilter.setAuthenticationSuccessHandler(getSuccessHandler());
-            return customLoginFilter;
-        }
+
+//        @Bean
+//        public CustomLoginFilter getCustomLoginFilter(AuthenticationManager authenticationManager){
+//            CustomLoginFilter customLoginFilter=new CustomLoginFilter();
+//            customLoginFilter.setAuthenticationManager(authenticationManager);
+//            customLoginFilter.setAuthenticationFailureHandler(getFailureHandler());
+//            customLoginFilter.setAuthenticationSuccessHandler(getSuccessHandler());
+//            return customLoginFilter;
+//        }
+        //커스텀 로그인 필터를 빈으로 등록
         @Bean
         public CustomAuthenticationFilter getCustomAuthenticationFilter(AuthenticationManager authenticationManager) {
             CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(userService, authServiceCilent);

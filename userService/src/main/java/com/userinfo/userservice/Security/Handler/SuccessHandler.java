@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 @RequiredArgsConstructor
 @Slf4j
+//사용 안함 나중에 따로 처리 필요!!
 public class SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final UserService userService;
     private final AuthServiceCilent authServiceCilent;

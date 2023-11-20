@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+//클라이언트측에 전달하기 위한 리뷰 정보가 담긴 DTO 클래스
 public class ResponseReviewDto {
     private double score;
     private String reviewText;

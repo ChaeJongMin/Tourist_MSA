@@ -7,6 +7,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
+//클라이언트측에서 작성한 리뷰를 서버에 전달하기 위한 DTO 클래스
 public class RequestReviewDto {
     private String tourDestNm;
     private String userNm;

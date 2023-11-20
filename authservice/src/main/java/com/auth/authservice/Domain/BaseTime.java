@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+// 엔티티 생성일자를 처리해주는 추상 클래스
 public class BaseTime {
     @CreatedDate
     private LocalDateTime createDates;

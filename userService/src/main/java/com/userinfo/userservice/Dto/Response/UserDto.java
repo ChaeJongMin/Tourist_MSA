@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+//자신(유저)의 정보를 보내기 위한 DTO 클래스
 @Getter
 @NoArgsConstructor
 public class UserDto {

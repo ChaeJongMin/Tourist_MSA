@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 
 import java.io.IOException;
 import java.util.HashMap;
-
+//사용 안함 나중에 따로 처리 필요!!
 public class FailureHandler extends SimpleUrlAuthenticationFailureHandler  {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {

@@ -19,6 +19,7 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+//사용 안함 나중에 따로 처리 필요!!
 @Slf4j
 public class CustomLoginFilter extends AbstractAuthenticationProcessingFilter {
 

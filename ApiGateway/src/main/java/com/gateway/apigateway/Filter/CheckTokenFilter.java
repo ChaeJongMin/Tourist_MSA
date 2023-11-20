@@ -12,6 +12,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 @Slf4j
+// 아직 사용안하는 필터 삭제 예정
 public class CheckTokenFilter extends AbstractGatewayFilterFactory<CheckTokenFilter.Config> {
     public CheckTokenFilter() {
         super(Config.class);

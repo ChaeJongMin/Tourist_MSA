@@ -15,6 +15,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
+//에플리케이션 전체에서 공통으로 사용되는 필터인 글로벌 필터
+//용도는 로깅 및 토큰 값 확인용
 @Component
 @Slf4j
 public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Config> {
