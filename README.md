@@ -12,15 +12,15 @@
 
 ## 실행영상
 
-https://youtu.be/eQr5fW61atY
 [![Video Label](http://img.youtube.com/vi/eQr5fW61atY/0.jpg)](https://youtu.be/eQr5fW61atY)
 
 ## 사용 기술
 
 언어 : Java, JS , HTML5/CSS3
-DB : MySQL
-웹 개발 및 마이크로서비스: : Spring cloud Gateway / Config / Bus / Netflix(Service Discovery/Client), JPA
-메시징 및 모니터링: Kafka , prometheus , grafana 
+DB : MySQL 8.0.3
+프레임워크 :SpringBoot 3.1.3
+웹 개발 및 마이크로서비스 : Spring cloud Gateway / Config / Bus / Netflix(Service Discovery/Client), JPA
+메시징 및 모니터링: Kafka 2.13 - 3.5.0 , prometheus 2.45.0 , grafana 10.0.1
 보안 : Spring Security , JWT 
 기타 : FeginClient
 
@@ -56,44 +56,6 @@ Checks if the best practices and the right coding style has been used.
 
 ## 기타
 
-자세한 정보는 notion 링크로 확인 가능
+자세한 정보는 notion 링크로 확인 가능합니다. 
 https://scythe-jeep-25f.notion.site/9c541f2a790c4f95a57877334f7f8e5c?pvs=4
 
-## Built With
-
-  - [Contributor Covenant](https://www.contributor-covenant.org/) - Used
-    for the Code of Conduct
-  - [Creative Commons](https://creativecommons.org/) - Used to choose
-    the license
-
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code
-of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [Semantic Versioning](http://semver.org/) for versioning. For the versions
-available, see the [tags on this
-repository](https://github.com/PurpleBooth/a-good-readme-template/tags).
-
-## Authors
-
-  - **Billie Thompson** - *Provided README Template* -
-    [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of
-[contributors](https://github.com/PurpleBooth/a-good-readme-template/contributors)
-who participated in this project.
-
-## License
-
-This project is licensed under the [CC0 1.0 Universal](LICENSE.md)
-Creative Commons License - see the [LICENSE.md](LICENSE.md) file for
-details
-
-## Acknowledgments
-
-  - Hat tip to anyone whose code is used
-  - Inspiration
-  - etc
