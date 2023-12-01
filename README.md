@@ -48,17 +48,10 @@
 + ### 11월
  2023.11 config-server 개발<br/>
  2023.11 모니터링 기능 개발<br/>
- 현재 추가 기능 개발 예정 중 
 
-2023.11
-### Style test
-
-Checks if the best practices and the right coding style has been used.
-
-    Give an example
++ ※ 현재 추가 기능 개발 예정 중 
 
 ## 기타
 
 자세한 정보는 notion 링크로 확인 가능합니다. 
 https://scythe-jeep-25f.notion.site/9c541f2a790c4f95a57877334f7f8e5c?pvs=4
-
