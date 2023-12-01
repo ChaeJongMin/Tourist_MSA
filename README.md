@@ -34,18 +34,21 @@
 6. Config-Server : 외부 저장소에서 서비스에게 환경정보 제공 
 
 ## 개발 일지
-2023.09 Service Discovery 개발<br/>
-2023.09 User-servcie의 로그인, 회원가입 개발<br/>
-2023.09 Map-Service의 지도에 관광지 표시<br/>
-2023.09 Map-Service의 관광지 상세 정보 및 리뷰 개발 <br/>
-2023.10 Review-Service 개발<br/>
-2023.10 Map-Service의 관광지에 대한 리뷰 및 리뷰 작성 개발<br/>
-2023.10 User-servcie의 마이페이지 개발<br/>
-2023.10 gateway-service 개발<br/>
-2023.10 Auth-servcie 개발<br/>
-2023.10 config-server 개발<br/>
-2023.11 모니터링 기능 개발<br/>
-현재 추가 기능 개발 예정 중 
++ ### 9월
+ 2023.09 Service Discovery 개발<br/>
+ 2023.09 User-servcie의 로그인, 회원가입 개발<br/>
+ 2023.09 Map-Service의 지도에 관광지 표시<br/>
+ 2023.09 Map-Service의 관광지 상세 정보 및 리뷰 개발 <br/>
++ ### 10월 
+ 2023.10 Review-Service 개발<br/>
+ 2023.10 Map-Service의 관광지에 대한 리뷰 및 리뷰 작성 개발<br/>
+ 2023.10 User-servcie의 마이페이지 개발<br/>
+ 2023.10 gateway-service 개발<br/>
+ 2023.10 Auth-servcie 개발<br/>
++ ### 11월
+ 2023.11 config-server 개발<br/>
+ 2023.11 모니터링 기능 개발<br/>
+ 현재 추가 기능 개발 예정 중 
 
 2023.11
 ### Style test
