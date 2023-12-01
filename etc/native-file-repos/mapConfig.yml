@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/tourist
+    username: root
+    password: '{cipher}AQCeWm5uXGolPrwB+9BQF3jfNGOS2X4Um0ArhXJW1GGeTjVHKhpb8WiOocil2gd0aOkUFWoAwpunBo6dkaXMEAdjINGbxES1NMAYRRXZ7Knwa5cfisrlKJ/8ZYWu2ensZLSWj8L05gFnCsg+gg3opELdNY3w5TVWKuLWMif0q3XLvUI7hVGS6UGeaJSEF4CiIGSJWeCPOhHhoEswpHTkUr/4gZCzwd3xE6yKHFd1Yj236laKvZTTWPQSmlN9ZkBcvpP/7k7whJPVGnBudxNk67HQ/lcuj8lAfM4uO5dsIb+Vq9r41q5jNmLngI/O/DvcjgmE+qMqP5Jj4oHHaRK60CeQcPWmM3SRxosYKHuxzO3a2Ro8S5EcE+zpeKuW91dNzxY='
+    driver-class-name: com.mysql.cj.jdbc.Driver
