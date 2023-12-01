@@ -13,6 +13,7 @@
 ## 실행영상
 
 https://youtu.be/eQr5fW61atY
+[![Video Label](http://img.youtube.com/vi/eQr5fW61atY/0.jpg)](https://youtu.be/eQr5fW61atY)
 
 ## 사용 기술
 
