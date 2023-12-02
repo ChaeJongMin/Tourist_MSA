@@ -16,14 +16,14 @@
 
 ## 사용 기술
 
-1. **언어** : Java, JS , HTML5/CSS3
+1. **언어** : Java ,JS , HTML5/CSS3
 2. **DB** : MySQL 8.0.3
 4. **프레임워크** :SpringBoot 3.1.3
 5. **웹 개발 및 마이크로서비스** : Spring cloud Gateway / Config / Bus / Netflix(Service Discovery/Client), JPA
 6. **메시징 및 모니터링** : Kafka 2.13 - 3.5.0 , prometheus 2.45.0 , grafana 10.0.1
 7. **보안** : Spring Security , JWT
 8. **OS** : Windows10
-9. **기타** : FeginClient
+9. **기타** : FeginClient , Intellij
 
 ## 서비스 설명
 
