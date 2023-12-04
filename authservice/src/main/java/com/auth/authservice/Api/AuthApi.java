@@ -2,6 +2,7 @@ package com.auth.authservice.Api;
 
 import com.auth.authservice.Dto.ResponseTokenDto;
 import com.auth.authservice.Service.AuthService;
+import io.micrometer.core.annotation.Timed;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class AuthApi {
     //로그인 시 토큰 발급
     //user-service에서 로그인 성공 시 FeginClient로 해당 아래 api 요청
     @GetMapping("/api/issue/{userId}")
+    @Timed(value = "auth-issue" , longTask = true)
     public ResponseEntity<ResponseTokenDto> respondAllToken(HttpServletResponse response, @PathVariable String userId){
         log.info("/api/issue/{userId} 작동 : "+ userId);
         return ResponseEntity.status(HttpStatus.OK).body(authService.generateAllTokens(userId, response));
@@ -30,7 +32,8 @@ public class AuthApi {
     //액세스 토큰 만료 시 리프레쉬 토큰으로 액세스 토큰을 재발급
     //Apigateway의 토큰 검사 필터에서 만료 or 사라짐 일떄 FeginClient로 해당 아래 api 요청
     @GetMapping("/api/reissue")
-    public ResponseEntity<String> respondAccessToken(HttpServletResponse response, @CookieValue(name = "refreshtoken") String refreshValue){
+    @Timed(value = "auth-reissue" , longTask = true)
+    public ResponseEntity<String> respondAccessToken(HttpServletResponse response,String refreshValue){
         //리프레쉬 토큰의 비어있을 시
         if (refreshValue == null || refreshValue.isEmpty()) {
             //예외처리 발동 ( 클라이언트에 응답하기 위해 따로 처리할 필요 있음)

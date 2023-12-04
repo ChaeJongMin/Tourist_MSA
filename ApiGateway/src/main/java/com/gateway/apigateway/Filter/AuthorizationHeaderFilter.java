@@ -58,12 +58,13 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             log.info("AuthorizationHeaderFilter Requested URL: {}", url);
 
             //액세스토큰을 가져와 값을 추출
-            String jwt = resolveAccessTokenFromRequest(request);
+            String jwt = resolveAccessTokenFromRequest(request, "accesstoken");
             // 비어 있을 경우
             if (jwt == null) {
                 log.info("AuthorizationHeaderFilter : 헤더에 토큰이 존재하지 않습니다.");
                 //새로 액세스 토큰을 받기위해 FeignClient로 Auth-Service의 재발급 API 요청
-                String refresh = reissueClient.tokenReissue();
+                String refreshValue = resolveAccessTokenFromRequest(request, "refreshtoken");
+                String refresh = reissueClient.tokenReissue(refreshValue);
                 //액세스 토큰을 쿠키에 집어넣어 응답
                 generateCookie(refresh,response);
             }
@@ -73,7 +74,9 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                 if(erroMsg.equals("만료된 JWT 토큰입니다.")){
                     log.info("AuthorizationHeaderFilter : 액세스 토큰 만료");
                     //새로 액세스 토큰을 받기위해 FeignClient로 Auth-Service의 재발급 API 요청
-                    String refresh = reissueClient.tokenReissue();
+                    String refreshValue = resolveAccessTokenFromRequest(request, "refreshtoken");
+                    String refresh = reissueClient.tokenReissue(refreshValue);
+                    generateCookie(refresh,response);
                 }
                 else {
                     //그 외 상황은 에러 응답
@@ -116,8 +119,9 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     }
 
     // 쿠키로부터 "accesstoken" key가 있는지 확인하고 있을 시 value를 반환하는 메소드
-    private String resolveAccessTokenFromRequest(ServerHttpRequest request) {
-        HttpCookie accessTokenCookie = request.getCookies().getFirst("accesstoken");
+    private String resolveAccessTokenFromRequest(ServerHttpRequest request, String cookieKey) {
+
+        HttpCookie accessTokenCookie = request.getCookies().getFirst(cookieKey);
         if (accessTokenCookie != null) {
             return accessTokenCookie.getValue();
         } else {

@@ -9,6 +9,17 @@ spring:
    config:
      name: mapConfig
      profile: default, token
+   bus:
+     enabled: true
+     refresh:
+       enabled: true
+  kafka:
+    bootstrap-servers: http://localhost:9092
+management:
+  endpoints:
+    web:
+      exposure:
+        include: busrefresh, info, metrics, prometheus
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}

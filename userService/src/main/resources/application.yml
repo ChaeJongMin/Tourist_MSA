@@ -7,12 +7,18 @@ spring:
     suffix: .html
   application:
     name: user-service
+  kafka:
+    bootstrap-servers: http://localhost:9092
   config:
     import: optional:configserver:http://localhost:8811
   cloud:
     config:
       name: mapConfig
       profile: default
+    bus:
+      enabled: true
+      refresh:
+        enabled: true
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
@@ -24,3 +30,8 @@ eureka:
 logging:
   level:
     com.userinfo.userservice.Client : DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include: busrefresh, info, metrics, prometheus

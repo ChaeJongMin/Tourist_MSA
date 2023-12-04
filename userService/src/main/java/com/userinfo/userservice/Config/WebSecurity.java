@@ -57,15 +57,15 @@ public class WebSecurity {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
                 //cors 설정
-                .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
-                    CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(Collections.singletonList("http://host.docker.internal:8000"));
-                    config.setAllowedMethods(Collections.singletonList("*"));
-                    config.setAllowedHeaders(Collections.singletonList("*"));
-                    config.setAllowCredentials(true);
-                    config.setMaxAge(3600L); //1시간
-                    return config;
-                }))
+//                .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
+//                    CorsConfiguration config = new CorsConfiguration();
+//                    config.setAllowedOrigins(Collections.singletonList("http://host.docker.internal:8000"));
+//                    config.setAllowedMethods(Collections.singletonList("*"));
+//                    config.setAllowedHeaders(Collections.singletonList("*"));
+//                    config.setAllowCredentials(true);
+//                    config.setMaxAge(3600L); //1시간
+//                    return config;
+//                }))
                 .csrf(csrf-> csrf.disable())
                 .authorizeHttpRequests((authorizeRequests)->
                         authorizeRequests
